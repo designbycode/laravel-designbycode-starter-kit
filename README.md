@@ -1,58 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel 13 + Filament v5 + Inertia React Starter Kit
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A production-ready Laravel starter kit combining **Filament v5** for the admin backend and **Inertia.js React 19** for the public frontend, built with **Tailwind CSS v4** and **Laravel Wayfinder**.
 
-## About Laravel
+## Key Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Filament v5:** Complete backend and admin panel administration.
+- **Inertia React 19:** Fast, SPA-like frontend powered by React 19 and Inertia.js v3.
+- **Unified Authentication:** Authentication is handled exclusively by Filament. The public-facing site has no authentication logic.
+- **Type-Safe Routing:** Driven by **Laravel Wayfinder**, which generates typed TypeScript functions for backend routes automatically.
+- **Tailwind CSS v4:** Styling configured with native dark mode toggling.
+- **Server Side Rendering (SSR):** Enabled for fast loads and SEO optimization.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Getting Started
 
-## Learning Laravel
+Follow these steps to create and run a new project using this starter kit.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Prerequisites
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Ensure you have the following installed:
+- **PHP 8.4+**
+- **Composer**
+- **Node.js 20+** & **npm**
+- A database engine (SQLite, MySQL, PostgreSQL, etc.)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+### Step 1: Install Dependencies
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+After cloning the repository, navigate into the directory and install both backend and frontend dependencies:
 
 ```bash
-composer require laravel/boost --dev
+# Install PHP dependencies
+composer install
 
-php artisan boost:install
+# Install JS dependencies
+npm install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### Step 2: Configure Environment
 
-## Contributing
+Copy the example environment file and generate the application key:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+# Copy env configuration
+cp .env.example .env
 
-## Code of Conduct
+# Generate application key
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Open `.env` and set up your database configuration:
 
-## Security Vulnerabilities
+```env
+DB_CONNECTION=sqlite
+# Or configure MySQL/PostgreSQL as needed
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Step 3: Run Migrations
 
-## License
+Migrate the database to generate the tables needed for authentication and default models:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan migrate
+```
+
+### Step 4: Create an Admin User
+
+Since authentication is handled entirely by Filament, you must create a Filament user to access the backend dashboard:
+
+```bash
+php artisan make:filament-user
+```
+
+Follow the prompts to configure the name, email address, and password for your admin account.
+
+### Step 5: Start Development Services
+
+To start writing code with Hot Module Replacement (HMR) and a local web server, run the following commands in separate terminal sessions:
+
+```bash
+# Start frontend asset compiler
+npm run dev
+
+# Start Laravel backend server
+php artisan serve
+```
+
+- **Frontend Application:** `http://127.0.5.1:8000` (or your local Herd URL)
+- **Filament Admin Dashboard:** `http://127.0.0.1:8000/admin`
+
+---
+
+## Conventions & Usage
+
+### 1. Kebab-Case Files
+All JavaScript/TypeScript files (pages, components, layouts, hooks) must follow **kebab-case** naming format (e.g. `welcome.tsx`, `app-layout.tsx`, `theme-toggle.tsx`).
+
+### 2. Type-Safe Routes with Wayfinder
+Ziggy is not used in this project. Instead, **Laravel Wayfinder** generates type-safe TypeScript helpers for your backend routes. 
+
+When you define a named route on the backend in `routes/web.php`:
+```php
+Route::get('/', function () {
+    return Inertia::render('welcome');
+})->name('home');
+```
+
+Run the generator:
+```bash
+php artisan wayfinder:generate
+```
+
+Import and call it directly in your JSX:
+```tsx
+import { Link } from '@inertiajs/react';
+import { home } from '../routes';
+
+export default function Nav() {
+    return (
+        <Link href={home.url()}>Go Home</Link>
+    );
+}
+```
+
+### 3. Theme Toggle & Dark Mode
+Manual light/dark mode selection is handled using the `.dark` selector. Redefined inside `resources/css/app.css` using:
+```css
+@custom-variant dark (&:where(.dark, .dark *));
+```
+Use the `useAppearance` hook in React to switch between `'light'`, `'dark'`, or `'system'` themes.
