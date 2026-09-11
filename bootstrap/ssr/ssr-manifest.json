@@ -1,0 +1,17 @@
+{
+  "node_modules/laravel-vite-plugin/inertia-helpers/index.js": [],
+  "resources/js/components/theme-toggle.tsx": [
+    "/build/assets/welcome-D6A4o9jZ.js"
+  ],
+  "resources/js/hooks/use-appearance.tsx": [],
+  "resources/js/layouts/app-layout.tsx": [
+    "/build/assets/welcome-D6A4o9jZ.js"
+  ],
+  "resources/js/lib/utils.ts": [
+    "/build/assets/welcome-D6A4o9jZ.js"
+  ],
+  "resources/js/pages/welcome.tsx": [
+    "/build/assets/welcome-D6A4o9jZ.js"
+  ],
+  "resources/js/ssr.tsx": []
+}

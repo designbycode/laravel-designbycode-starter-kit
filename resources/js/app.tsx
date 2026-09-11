@@ -1,9 +1,10 @@
-import '../css/app.css';
+import '@/../css/app.css';
 
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { AppearanceProvider } from './hooks/use-appearance';
+import { Toaster } from '@/components/ui/sonner';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -14,6 +15,7 @@ createInertiaApp({
         const application = (
             <AppearanceProvider>
                 <App {...props} />
+                <Toaster />
             </AppearanceProvider>
         );
 
@@ -25,7 +27,7 @@ createInertiaApp({
         hydrateRoot(el, application);
     },
     progress: {
-        color: '#4f46e5',
+        color: 'var(--primary)',
         showSpinner: true,
     },
 });

@@ -7,11 +7,14 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "athphane/filament-editorjs": "^2.6",
         "filament/filament": "*",
+        "filament/spatie-laravel-media-library-plugin": "^5.0",
         "inertiajs/inertia-laravel": "*",
         "laravel/framework": "^13.8",
         "laravel/tinker": "^3.0",
-        "laravel/wayfinder": "*"
+        "laravel/wayfinder": "*",
+        "stephenjude/filament-two-factor-authentication": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

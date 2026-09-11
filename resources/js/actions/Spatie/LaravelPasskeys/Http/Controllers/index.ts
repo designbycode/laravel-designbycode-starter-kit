@@ -1,0 +1,8 @@
+import GeneratePasskeyAuthenticationOptionsController from './GeneratePasskeyAuthenticationOptionsController'
+import AuthenticateUsingPasskeyController from './AuthenticateUsingPasskeyController'
+const Controllers = {
+    GeneratePasskeyAuthenticationOptionsController: Object.assign(GeneratePasskeyAuthenticationOptionsController, GeneratePasskeyAuthenticationOptionsController),
+AuthenticateUsingPasskeyController: Object.assign(AuthenticateUsingPasskeyController, AuthenticateUsingPasskeyController),
+}
+
+export default Controllers
